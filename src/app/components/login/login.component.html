@@ -1,0 +1,30 @@
+<form class="form-signin text-center mt-5 animated fadeIn" (ngSubmit)="guardar()" #forma="ngForm">
+    <img class="mb-4" src="/assets/img/resume.png" alt="" width="72" height="72">
+    <h1 *ngIf="banderaSesion" class="h3 mb-3 font-weight-normal">Iniciar sesión</h1>
+    <h1 *ngIf="!banderaSesion" class="h3 mb-3 font-weight-normal">Registrate</h1>
+
+    <label class="sr-only">Correo</label>
+    <input #correo=ngModel [(ngModel)]="usuario.correo" name="correo" type="email" class="form-control" placeholder="Correo electronico" required [ngClass]="{'is-invalid': (correo.errors?.required || correo.errors?.pattern) &&  correo.touched }" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+    <div *ngIf="!!correo.errors?.required" class="invalid-feedback inline">
+        Este campo es requerido
+    </div>
+    <div *ngIf="!!correo.errors?.pattern" class="invalid-feedback">
+        Este campo no tiene el formato correcto
+    </div>
+    <label class="sr-only">Contraseña</label>
+    <input #contrasena=ngModel [(ngModel)]="usuario.contrasena" name="contrasena" type="password" class="form-control" placeholder="Contraseña" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" [ngClass]="{'is-invalid': (contrasena.errors?.required || contrasena.errors?.pattern) &&  contrasena.touched }">
+    <div *ngIf="!!contrasena.errors?.required" class="invalid-feedback">
+        Este campo es requerido
+    </div>
+    <div *ngIf="!!contrasena.errors?.pattern" class="invalid-feedback">
+        La contraseña mnimo debe tener una letra Mayuscula,una minúcula y un numero
+    </div>
+    <div class="mb-3">
+        <p *ngIf="!banderaSesion">ya tienes cuenta? <a class="puntero" (click)="cambiar()">Inicia sesión</a> </p>
+        <p *ngIf="banderaSesion"> ¿No tienes cuenta? <a class="puntero" (click)="cambiar()">Registrate</a> </p>
+    </div>
+
+    <button [disabled]="forma.invalid" *ngIf="banderaSesion" class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
+    <button [disabled]="forma.invalid" *ngIf="!banderaSesion" class="btn btn-lg btn-primary btn-block" type="submit">Registrar</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+</form>

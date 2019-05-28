@@ -1,0 +1,71 @@
+<div class="container mt-5 mb-5">
+    <button [routerLink]="['/perfiles']" routerLinkActive="active" type="button" class="btn btn-outline-danger mb-4">Regresar</button>
+    <h3>Perfil Profesional</h3>
+    <div class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img [src]=" usuario.foto  || 'assets/img/noimage.png'" class="card-img" alt="Noimage">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <!-- Formulario Datos Personales -->
+                    <h5>Datos personales</h5>
+                    <form #forma="ngForm">
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1"><span class="text-danger">*</span>  Correo</label>
+                            <input [disabled]="true" #correo=ngModel type="email" class="form-control" name="correo" [(ngModel)]="usuario.correo" placeholder="name@example.com" required [ngClass]="{'is-invalid': (correo.errors?.required || correo.errors?.pattern) &&  correo.touched }"
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+                            <div *ngIf="!!correo.errors?.required" class="invalid-feedback">
+                                Este campo es requerido
+                            </div>
+                            <div *ngIf="!!correo.errors?.pattern" class="invalid-feedback">
+                                Este campo no tiene el formato correcto
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1"><span class="text-danger">*</span>Contraseña</label>
+                            <input [disabled]="true" #contrasena=ngModel type="password" class="form-control" name="contrasena" [(ngModel)]="usuario.contrasena" placeholder="" required [ngClass]="{'is-invalid': (contrasena.errors?.required || contrasena.errors?.pattern) &&  contrasena.touched }"
+                                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$">
+                            <div *ngIf="!!contrasena.errors?.required" class="invalid-feedback">
+                                Este campo es requerido
+                            </div>
+                            <div *ngIf="!!contrasena.errors?.pattern" class="invalid-feedback">
+                                La contraseña mnimo debe tener una letra Mayuscula,una minúcula y un numero
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1"><span class="text-danger">*</span>Nombres</label>
+                            <input [disabled]="true" #nombres=ngModel type="text" class="form-control" [(ngModel)]="usuario.nombres" name="nombres" placeholder="" required [(ngModel)]="usuario.nombres" placeholder="" [ngClass]="{'is-invalid': nombres.errors?.required &&  nombres.touched }">
+                            <div *ngIf="!!nombres.errors?.required" class="invalid-feedback">
+                                Este campo es requerido
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1"> <span class="text-danger">*</span> Apellidos</label>
+                            <input [disabled]="true" #apellidos=ngModel type="text" class="form-control" [(ngModel)]="usuario.apellidos" name="apellidos" placeholder="" required [ngClass]="{'is-invalid': apellidos.errors?.required &&  apellidos.touched }">
+                            <div *ngIf="!!nombres.errors?.required" class="invalid-feedback">
+                                Este campo es requerido
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1"> Descripción</label>
+                            <textarea [disabled]="true" [(ngModel)]="usuario.descripcion" name="descripcion" class="form-control" rows="3"></textarea>
+                        </div>
+                    </form>
+                    <hr>
+                    <!-- Experiencias laborales -->
+                    <h5 for="exampleFormControlFile1">Experiencias laborales</h5>
+                    <div class="card border-primary mb-3" *ngFor="let experienciaf of usuario.explaborales">
+                        <div class="card-header">
+                            <h6>{{experienciaf.empresa }}</h6>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-title"> <b>Tiempo: </b>{{ experienciaf.tiempo }} año(s)</p>
+                            <p class="card-text"> <b> Cargo:</b> {{ experienciaf.cargo }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

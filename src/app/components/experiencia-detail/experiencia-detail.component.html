@@ -1,0 +1,28 @@
+<app-navbar></app-navbar>
+<div class="container mt-5">
+    <button [routerLink]="['/home',idusuario]" routerLinkActive="active" type="button" class="btn btn-outline-danger mb-4">Regresar</button>
+    <form #forma="ngForm">
+        <div class="form-group">
+            <label for="exampleInputEmail1"> <span class="text-danger">*</span> Empresa</label>
+            <input #empresa=ngModel [(ngModel)]="experienciaDetalle.empresa" name="empresa" type="text" class="form-control" placeholder="Ingrese el nombre de la empresa" required [ngClass]="{'is-invalid': empresa.errors?.required &&  empresa.touched }">
+            <div *ngIf="!!empresa.errors?.required" class="invalid-feedback">
+                Este campo es requerido
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1"><span class="text-danger">*</span>Tiempo</label>
+            <input #tiempo=ngModel [(ngModel)]="experienciaDetalle.tiempo" name="tiempo" type="number" class="form-control" placeholder="Ingrese el tiempo laborado" required [ngClass]="{'is-invalid': tiempo.errors?.required &&  tiempo.touched }">
+            <div *ngIf="!!tiempo.errors?.required" class="invalid-feedback">
+                Este campo es requerido
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1"><span class="text-danger">*</span>Cargo</label>
+            <input #cargo=ngModel [(ngModel)]="experienciaDetalle.cargo" name="cargo" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese el cargo que desempeño" required [ngClass]="{'is-invalid': cargo.errors?.required &&  cargo.touched }">
+            <div *ngIf="!!cargo.errors?.required" class="invalid-feedback">
+                Este campo es requerido
+            </div>
+        </div>
+        <button [disabled]="forma.invalid" (click)="guardarExperiencia()" type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>

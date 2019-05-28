@@ -1,0 +1,26 @@
+<div class="container mt-5">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Contraseña</th>
+                <th scope="col">Nombres</th>
+                <th scope="col">Apellidos</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let usuario of usuarios; let i = index">
+                <th scope="row">{{ i + 1}}</th>
+                <td>{{ usuario.correo }}</td>
+                <td>{{ usuario.contrasena }}</td>
+                <td>{{ usuario.nombres }}</td>
+                <td>{{ usuario.apellidos }}</td>
+                <td>
+                    <button [routerLink]="['/perfil',usuario.id]" type="button" class="btn btn-outline-primary">Ver</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

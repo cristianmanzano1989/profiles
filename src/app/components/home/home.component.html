@@ -1,0 +1,91 @@
+<app-navbar [id]="id" [usuario]="usuario"></app-navbar>
+<div class="container mt-5 mb-5">
+    <h3>Perfil Profesional</h3>
+    <div class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img [src]="usuario.foto || 'assets/img/noimage.png'" width="100%" height="100%" class="card-img img-fluid" alt="Noimage">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <!-- Formulario Datos Personales -->
+                    <h5>Datos personales</h5>
+                    <form #forma="ngForm">
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1"><span class="text-danger">*</span>  Correo</label>
+                            <input #correo=ngModel type="email" class="form-control" name="correo" [(ngModel)]="usuario.correo" placeholder="name@example.com" required [ngClass]="{'is-invalid': (correo.errors?.required || correo.errors?.pattern) &&  correo.touched }" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+                            <div *ngIf="!!correo.errors?.required" class="invalid-feedback">
+                                Este campo es requerido
+                            </div>
+                            <div *ngIf="!!correo.errors?.pattern" class="invalid-feedback">
+                                Este campo no tiene el formato correcto
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1"><span class="text-danger">*</span>Contraseña</label>
+                            <input #contrasena=ngModel type="password" class="form-control" name="contrasena" [(ngModel)]="usuario.contrasena" placeholder="" required [ngClass]="{'is-invalid': (contrasena.errors?.required || contrasena.errors?.pattern) &&  contrasena.touched }"
+                                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$">
+                            <div *ngIf="!!contrasena.errors?.required" class="invalid-feedback">
+                                Este campo es requerido
+                            </div>
+                            <div *ngIf="!!contrasena.errors?.pattern" class="invalid-feedback">
+                                La contraseña mnimo debe tener una letra Mayuscula,una minúcula y un numero
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1"><span class="text-danger">*</span>Nombres</label>
+                            <input #nombres=ngModel type="text" class="form-control" [(ngModel)]="usuario.nombres" name="nombres" placeholder="" required [(ngModel)]="usuario.nombres" placeholder="" [ngClass]="{'is-invalid': nombres.errors?.required &&  nombres.touched }">
+                            <div *ngIf="!!nombres.errors?.required" class="invalid-feedback">
+                                Este campo es requerido
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1"> <span class="text-danger">*</span> Apellidos</label>
+                            <input #apellidos=ngModel type="text" class="form-control" [(ngModel)]="usuario.apellidos" name="apellidos" placeholder="" required [ngClass]="{'is-invalid': apellidos.errors?.required &&  apellidos.touched }">
+                            <div *ngIf="!!nombres.errors?.required" class="invalid-feedback">
+                                Este campo es requerido
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1"><span class="text-danger">*</span> Descripción</label>
+                            <textarea #descripcion=ngModel [(ngModel)]="usuario.descripcion" name="descripcion" class="form-control" rows="3" required [ngClass]="{'is-invalid': descripcion.errors?.required &&  descripcion.touched }"></textarea>
+                            <div *ngIf="!!descripcion.errors?.required" class="invalid-feedback">
+                                Este campo es requerido
+                            </div>
+                        </div>
+                        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="4 / 3" [resizeToWidth]="128" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
+                        <div class="form-group">
+                            <label for="exampleFormControlFile1">Foto</label>
+                            <input type="file" (change)="fileChangeEvent($event)" name="foto" class="form-control-file">
+                        </div>
+                        <button [disabled]="forma.invalid" (click)="guardarPerfil()" class="btn btn- btn-outline-primary mt-5 mb-3 btn-block" type="submit">Guardar</button>
+                    </form>
+                    <hr>
+                    <!-- Experiencias laborales -->
+                    <h5 for="exampleFormControlFile1">Experiencias laborales</h5>
+                    <div class="card border-primary mb-3" *ngFor="let experienciaf of usuario.explaborales">
+                        <div class="card-header">
+                            <h6>{{experienciaf.empresa }}</h6>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-title"> <b>Tiempo: </b>{{ experienciaf.tiempo }} año(s)</p>
+                            <p class="card-text"> <b> Cargo:</b> {{ experienciaf.cargo }}</p>
+                            <button [routerLink]="['/home',usuario.id,'exp',experienciaf.id]" routerLinkActive="active" type="button" class="btn btn-outline-primary d-inline-block" data-toggle="modal" data-target="#exampleModal">
+                                Editar
+                            </button>
+                            <button (click)="eliminarExperiencia(usuario,experienciaf)" type="button" class="btn btn-outline-danger ml-4">Eliminar</button>
+                        </div>
+
+                    </div>
+                    <hr>
+                    <div>
+                        <h5>Agregar experiencia laboral</h5>
+                        <button [routerLink]="['/home',usuario.id,'exp']" routerLinkActive="active" type="button" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#exampleModal">
+                          Agregar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
